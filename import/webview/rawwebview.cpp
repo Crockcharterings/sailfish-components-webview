@@ -194,6 +194,7 @@ void RawWebView::handleTouchEvent(QTouchEvent *event)
                 grabTouchPoints(QVector<int>() << touchPoint.id());
             } else {
                 m_startPos = touchPoint.scenePos();
+qWarning() << "Have start touch position:" << touchPoint.scenePos().x() << "," << touchPoint.scenePos().y();
                 setKeepMouseGrab(false);
                 setKeepTouchGrab(false);
             }
@@ -205,6 +206,7 @@ void RawWebView::handleTouchEvent(QTouchEvent *event)
             if (QQuickWindowPrivate::get(win)->touchMouseId == touchPoint.id()) {
                 const int dragThreshold = QGuiApplication::styleHints()->startDragDistance();
                 QPointF delta = touchPoint.scenePos() - m_startPos;
+qWarning() << "Have moved touch position:" << touchPoint.scenePos().x() << "," << touchPoint.scenePos().y();
                 if (!keepMouseGrab()) {
                     if ((delta.y() >= dragThreshold && !atYBeginning()) || (delta.y() <= -dragThreshold && !atYEnd())
                             || (delta.x() >= dragThreshold && !atXBeginning()) || (delta.x() <= -dragThreshold && !atXEnd())) {
@@ -229,6 +231,7 @@ void RawWebView::handleTouchEvent(QTouchEvent *event)
                 continue;
             touchStates |= Qt::TouchPointReleased;
             removedTouches << touchPoint.id();
+qWarning() << "Have end touch position:" << touchPoint.scenePos().x() << "," << touchPoint.scenePos().y();
             break;
         }
         default:
